@@ -1,0 +1,24 @@
+web-frontend:
+  image: smashwilson/lets-nginx
+  ports:
+   - "443:443"
+   - "80:80"
+  links:
+   - web-backend
+  environment:
+      EMAIL: paul@stomer.net
+      DOMAIN: www.hespera.net
+      UPSTREAM: backend:80
+web-backend:
+  image: nginx
+  volumes:
+   - .:/code
+tor:
+  image: rdsubhas/tor-privoxy-alpine
+  ports:
+    - "127.0.0.1:8118:8118"
+  
+  
+  # bbcba7ec819e        smashwilson/lets-nginx        "/entrypoint.sh"       2 days ago          Up 2 days           0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   nginxssl
+  # b78f239a9743        nginx                         "nginx -g 'daemon of   2 days ago          Up 2 days           80/tcp, 443/tcp                            nginx
+  # 49365738ff2c        rdsubhas/tor-privoxy-alpine   "runsvdir /etc/servi   5 weeks ago         Up 3 weeks          127.0.0.1:8118->8118/tcp, 9050/tcp         tor
